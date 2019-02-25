@@ -75,4 +75,11 @@ list_of_lengthish :: [[Int]] -> [[Int]]
 list_of_lengthish [] = []
 list_of_lengthish (h:l) = (len h (quicksort h)) : list_of_lengthish l
 
-flip_stack :: Int
+flip_stack :: Int -> [Int] -> [Int]
+flip_stack pos s = (reverse (first_half pos s)) ++ second_half pos s
+
+flip_stack' :: Int -> [(Int,Int)] -> [(Int,Int)]
+flip_stack' pos s = (reverse z) ++ y
+				where x = first_half pos second_half
+					  y = second_half pos s
+					  z = map(\p@(f,o) -> if o == 1 then (f,0) else (f,1)) x
