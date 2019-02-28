@@ -139,8 +139,8 @@ case_4a xs = (ys,p)
                     p = path ++ [pos]
                     ys = flip_stack pos list
 
-case_4a :: ([Int],[Int]) -> ([Int],[Int])
-case_4a xs = (ys,p)
+case_4b :: ([Int],[Int]) -> ([Int],[Int])
+case_4b xs = (ys,p)
             where pos = (indexOf (x+1) list)-1
                     list = fst xs
                     path = snd xs
@@ -148,7 +148,169 @@ case_4a xs = (ys,p)
                     p = path ++ [pos]
                     ys = flip_stack pos list
 
-case 5a :: ([Int],[Int]) -> ([Int],[Int])
+case_5a :: ([Int],[Int]) -> ([Int],[Int])
 case_5a xs = (ys,p)
             where pos = (indexOf (x+1) list)-1
-                    list = fst xs 
+                    list = fst xs
+                    path = snd xs
+                    x = head list
+                    p = path ++ [pos]
+                    ys = flip_stack pos list
+
+case_5b :: ([Int],[Int]) -> ([Int],[Int])
+case_5b xs = (ys,p)
+            where pos = (indexOf (x+1) list)-1
+                    list = fst xs
+                    path = snd xs
+                    x = head list
+                    p = path ++ [pos]
+                    ys = flip_stack pos list
+
+case_6a :: ([Int],[Int]) -> ([Int],[Int])
+case_6a list = (fs,ps)
+            where posx = indexOf ((end_of_block xs len) +1) xs
+                    ys = flip_stack posx xs
+                    posy = (indexOf ((end_of_block xs len)) ys) -1
+                    zs = flip_stack posy ys
+                    posz = (indexOf (x-1) zs)
+                    vs = flip_stack posz zs
+                    posi = (indexOf x vs) -1
+                    xs = fst list
+                    x = head xs
+                    path = snd list
+                    fs = flip_stack posi vs
+                    ps = path ++ [posx,posy,posz,posi]
+                    len = length(fst(list))
+
+case_6a' :: ([Int],[Int]) -> ([Int],[Int])
+case_6a list = (fs,ps)
+                where posx = indexOf ((end_of_block xs len) -1) xs
+                        ys = flip_stack posx xs
+                        posy = (indexOf ((end_of_block xs len)) ys) -1
+                        zs = flip_stack posy ys
+                        posz = (indexOf (x+1) zs)
+                        vs = flip_stack posz zs
+                        posi = (indexOf x vs) -1
+                        xs = fst list
+                        x = head xs
+                        path = snd list
+                        fs = flip_stack posi vs
+                        ps = path ++ [posx,posy,posz,posi]
+                        len = length(fst(list))
+
+case_6b :: ([Int],[Int]) -> ([Int],[Int])
+case_6b list = (fs,ps)
+                where posx = indexOf ((end_of_block xs len) +1) xs
+                        ys = flip_stack posx xs
+                        posy = ((indexOf (end_of_block xs len) ys) -1)
+                        zs = flip_stack posy ys
+                        posz = indexOf x zs
+                        vs = flip_stack posz zs
+                        posi = (indexOf (x-1) vs) -1
+                        xs = fst list
+                        x = head xs
+                        path = snd list
+                        fs = flip_stack posi vs
+                        ps = path ++ [posx,posy,posz,posi]
+                        len = length(fst(list))
+
+
+case_6b' :: ([Int],[Int]) -> ([Int],[Int])
+case_6b' list = (fs,ps)
+                where posx = indexOf ((end_of_block xs len) -1) xs
+                        ys = flip_stack posx xs
+                        posy = ((indexOf (end_of_block xs len) ys) -1)
+                        zs = flip_stack posy ys
+                        posz = indexOf x zs
+                        vs = flip_stack posz zs
+                        posi = (indexOf (x+1) vs) -1
+                        xs = fst list
+                        x = head xs
+                        path = snd list
+                        fs = flip_stack posi vs
+                        ps = path ++ [posx,posy,posz,posi]
+                        len = length(fst(list))
+
+case_7b :: ([Int],[Int]) -> ([Int],[Int])
+case_7b list = (fs,ps)
+                where posx = indexOf (end_of_block xs len) xs
+                        ys = flip_stack posx xs
+                        posy = ((indexOf ((end_of_block xs len) +1) ys) -1)
+                        xs = fst list
+                        x = head xs
+                        path = snd list
+                        fs = flip_stack posy ys
+                        ps = path ++ [posx,posy,posz,posi]
+                        len = length(fst(list))
+
+case_7a' :: ([Int],[Int]) -> ([Int],[Int])
+case_7b' list = (fs,ps)
+                where posx = indexOf (end_of_block xs len) xs
+                        ys = flip_stack posx xs
+                        posy = ((indexOf ((end_of_block xs len) -1) ys) -1)
+                        xs = fst list
+                        x = head xs
+                        path = snd list
+                        fs = flip_stack posy ys
+                        ps = path ++ [posx,posy,posz,posi]
+                        len = length(fst(list))
+
+case_7b :: ([Int],[Int]) -> ([Int],[Int])
+case_7b list = (fs,ps)
+                where posx = indexOf ((end_of_block xs len) +1) xs
+                        ys = flip_stack posx xs
+                        posy = ((indexOf (end_of_block xs len) ys) -1)
+                        xs = fst list
+                        x = head xs
+                        path = snd list
+                        fs = flip_stack posy ys
+                        ps = path ++ [posx,posy,posz,posi]
+                        len = length(fst(list))
+
+case_7b' :: ([Int],[Int]) -> ([Int],[Int])
+case_7b' list = (fs,ps)
+                where posx = indexOf ((end_of_block xs len) -1) xs
+                        ys = flip_stack posx xs
+                        posy = ((indexOf (end_of_block) ys) -1)
+                        xs = fst list
+                        x = head xs
+                        path = snd list
+                        fs = flip_stack posy ys
+                        ps = path ++ [posx,posy]
+
+solve :: ([Int],[Int]) -> ([Int],[Int])
+solve t | xs == goal = t
+        | xs == reverse(goal) = (reverse(xs),(p ++ [(length xs)]))
+        | free x xs && free (x+1) xs = solve (case_1a t)
+        | free x xs && free (x-1) xs = solve (case_1b t)
+        | free x xs && first_of_block (x+1) xs = solve (case_2a t)
+        | free x xs && first_of_block (x-1) xs = solve (case_2b t)
+        | free x xs && last_of_block (x+1) xs = solve (case_3b t)
+        | free x xs && last_of_block (x-1) xs = solve (case_3c t)
+        | in_a_block x xs && free (x+1) xs = solve (case_4a t)
+        | in_a_block x xs && free (x-1) xs = solve (case_4b t)
+        | in_a_block x xs && first_of_block (x+1) xs = solve (case_5a t)
+        | in_a_block x xs && first_of_block (x-1) xs = solve (case_5b t)
+        | in_a_block x xs && in_a_block (x+1) xs && diff_blocks x (x+1) xs && free prev xs && (posp < posy) = solve (case_6a' t)
+        | in_a_block x xs && in_a_block (x-1) xs && diff_blocks x (x-1) xs && free next xs && (posn < posy) = solve (case_6a t)
+        | in_a_block x xs && in_a_block (x+1) xs && diff_blocks x (x+1) xs && free prev xs && (posp > posy) = solve (case_6b' t)
+        | in_a_block x xs && in_a_block (x-1) xs && diff_blocks x (x-1) xs && free next xs && (posn > posy) = solve (case_6b t)
+        | in_a_block x xs && in_a_block (x+1) xs && diff_blocks x (x+1) xs && last_of_block (x+1) xs && in_a_block prev xs && first_of_block prev xs = solve (case_7a' t)
+        | in_a_block x xs && in_a_block (x-1) xs && diff_blocks x (x-1) xs && last_of_block (x-1) xs && in_a_block next xs && first_of_block next xs = solve (case_7a t)
+        | in_a_block x xs && in_a_block (x+1) xs && diff_blocks x (x+1) xs && last_of_block (x+1) xs && in_a_block prev xs && last_of_block prev xs = solve (case_7b' t)
+        | in_a_block x xs && in_a_block (x-1) xs && diff_blocks x (x-1) xs && last_of_block (x-1) xs && in_a_block next xs && last_of_block next xs = solve (case_7b t)
+        | otherwise = solve (reverse(fst t),((snd t) ++ [(length xs)]))
+        where xs = fst t
+              x = head xs
+              p = snd t
+              goal = quicksort xs
+              next = end_of_block xs len +1
+              prev = end_of_block xs len -1
+              posx = indexOf (x-1) xs
+              posy = indexOf (x+1) xs
+              posn = indexOf next xs
+              posp = indexOf prev xs
+              len = length(fst(t))
+
+gates :: [Int] -> [Int]
+gates xs = snd (solve ((lengthish xs), []))
